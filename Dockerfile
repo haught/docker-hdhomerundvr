@@ -11,8 +11,8 @@ RUN mkdir -p /opt/hdhomerun \
              /opt/hdhomerun/bin \
              /opt/hdhomerun/etc
 
-RUN curl -O -o /opt/hdhomerun/bin/hdhomerun_record \
-         -L https://download.silicondust.com/hdhomerun/hdhomerun_record_linux
+RUN curl -o /opt/hdhomerun/bin/hdhomerun_record \
+ -L https://download.silicondust.com/hdhomerun/hdhomerun_record_linux
 
 ADD hdhomerun.conf /opt/hdhomerun/etc/
 
@@ -21,4 +21,4 @@ EXPOSE 65001/udp 65002
 VOLUME ["/data"]
 
 CMD ["/opt/hdhomerun/bin/hdhomerun_record foreground \
-      --conf /opt/hdhomerun/etc/hdhomerun.conf"]
+ --conf /opt/hdhomerun/etc/hdhomerun.conf"]
