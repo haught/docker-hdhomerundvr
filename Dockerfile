@@ -1,11 +1,8 @@
 
-FROM ubuntu:16.04
+FROM alpine:latest
 MAINTAINER Matt Haught <matt@haught.org>
 
-RUN apt-get -q update && \
-    apt-get -qy dist-upgrade && \
-    apt-get install -qy \
-    curl
+RUN apk add --no-cache curl
 
 RUN mkdir -p /opt/hdhomerun \
              /opt/hdhomerun/bin \
