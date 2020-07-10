@@ -1,22 +1,30 @@
 
 FROM alpine:latest
-MAINTAINER Matt Haught <matt@haught.org>
+LABEL Maintainer="Matt Haught <matt@haught.org>" \
+  version="1.0" \
+  description="HD HomeRun DVR"
 
 RUN apk add --no-cache curl
 
+RUN adduser --system --no-create-home --uid 65002 homerun
+
+COPY hdhomerun.conf /opt/hdhomerun/etc/
+COPY run-dvr.sh /run-dvr.sh
+
 RUN mkdir -p /opt/hdhomerun \
              /opt/hdhomerun/bin \
-             /opt/hdhomerun/etc
-
-RUN curl -o /opt/hdhomerun/bin/hdhomerun_record \
-         -SL https://download.silicondust.com/hdhomerun/hdhomerun_record_linux
-
-RUN chmod 755 /opt/hdhomerun/bin/hdhomerun_record
-
-ADD hdhomerun.conf /opt/hdhomerun/etc/
+             /opt/hdhomerun/etc \
+    && mkdir /data \
+    && chown -R homerun /data \
+    && touch /opt/hdhomerun/bin/hdhomerun_record \
+    && chmod -v +x /opt/hdhomerun/bin/hdhomerun_record \
+    && chown homerun /opt/hdhomerun/bin/hdhomerun_record \
+    && chmod -v +x /run-dvr.sh
 
 EXPOSE 65001/udp 65002
 
 VOLUME ["/data"]
 
-CMD ["/opt/hdhomerun/bin/hdhomerun_record", "foreground", "--conf", "/opt/hdhomerun/etc/hdhomerun.conf"]
+USER homerun
+
+CMD ["/run-dvr.sh"]
