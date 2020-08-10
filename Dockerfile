@@ -19,6 +19,7 @@ RUN mkdir -p /opt/hdhomerun \
     && touch /opt/hdhomerun/bin/hdhomerun_record \
     && chmod -v +x /opt/hdhomerun/bin/hdhomerun_record \
     && chown homerun /opt/hdhomerun/bin/hdhomerun_record \
+    && chown -R homerun /opt/hdhomerun \
     && chmod -v +x /run-dvr.sh
 
 EXPOSE 65001/udp 65002
