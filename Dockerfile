@@ -26,6 +26,6 @@ EXPOSE 65001/udp 65002
 
 VOLUME ["/data"]
 
-USER homerun
+USER 65002
 
 CMD ["/run-dvr.sh"]
